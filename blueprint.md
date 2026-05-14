@@ -14,6 +14,7 @@ This document outlines the design and development plan for a web application tha
 *   **Timeline Display:** The itinerary will be displayed in a clean, chronological timeline view.
 *   **Modern UI/UX:** The application will have a modern, visually appealing design with a focus on user experience, inspired by the reference provided (withlocals.com).
 *   **Reset functionality:** A reset button will be available to clear all selected preferences and the generated itinerary.
+*   **Disqus Integration:** A Disqus forum will be available at the bottom of the page for user comments and discussions.
 
 ## Current Task: UI/UX Revamp and Feature Enhancement
 
