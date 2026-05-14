@@ -16,15 +16,20 @@ This document outlines the design and development plan for a web application tha
 *   **Reset functionality:** A reset button will be available to clear all selected preferences and the generated itinerary.
 *   **Disqus Integration:** A Disqus forum will be available at the bottom of the page for user comments and discussions.
 
-## Current Task: Add Ratings and Icons to Itinerary
+## Current Task: Add Animations and Sound
 
-This task focuses on enhancing the itinerary by adding mock review ratings and icons for different activity types.
+This task focuses on adding a headline graphic, hover sounds, and a loading animation to enhance the user experience.
 
 ### Plan
 
-1.  **Add Icon Library (`index.html`):**
-    *   Integrate Font Awesome to provide a library of icons.
-2.  **Add Ratings and Icons (`main.js`):**
-    *   Update the itinerary generation logic to include a mock rating and an icon for each event.
-3.  **Style Ratings and Icons (`style.css`):**
-    *   Add styling to format and display the ratings and icons within the itinerary timeline.
+1.  **Add Assets (`assets/`):**
+    *   Create an `assets` directory to store a pixel art traveler GIF and a hover sound.
+2.  **Add Elements (`index.html`):**
+    *   Add an `<img>` tag for the headline graphic.
+    *   Add an `<audio>` tag for the hover sound.
+    *   Add a container for the loading animation.
+3.  **Add Styling (`style.css`):**
+    *   Add styling for the headline graphic and loading animation.
+4.  **Implement Logic (`main.js`):**
+    *   Implement hover sound effects on interactive elements.
+    *   Implement a loading animation with a time delay before displaying the itinerary.

@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeline = document.getElementById('timeline');
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const loadingAnimation = document.getElementById('loading-animation');
+    const hoverSound = document.getElementById('hover-sound');
 
     // Mock data for suburbs in Singapore
     const suburbsInSingapore = [
@@ -79,15 +81,29 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.id = 'reset-button';
     preferencesForm.appendChild(resetButton);
 
+    // Hover sound effect
+    const interactiveElements = document.querySelectorAll('button, select, input, a, #theme-toggle');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            hoverSound.play();
+        });
+    });
+
     // Event listener for form submission
     preferencesForm.addEventListener('submit', e => {
         e.preventDefault();
-        const formData = new FormData(preferencesForm);
-        const userPreferences = {};
-        for (const [key, value] of formData.entries()) {
-            userPreferences[key] = value;
-        }
-        generateItinerary(userPreferences);
+        loadingAnimation.style.display = 'block';
+        timeline.innerHTML = '';
+
+        setTimeout(() => {
+            loadingAnimation.style.display = 'none';
+            const formData = new FormData(preferencesForm);
+            const userPreferences = {};
+            for (const [key, value] of formData.entries()) {
+                userPreferences[key] = value;
+            }
+            generateItinerary(userPreferences);
+        }, 2000);
     });
 
     // Event listener for reset button
@@ -123,8 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mock itinerary generation
     function generateItinerary(preferences) {
-        timeline.innerHTML = ''; // Clear previous itinerary
-
         const name = preferences.name || "adventurer";
 
         const mockEvents = [
