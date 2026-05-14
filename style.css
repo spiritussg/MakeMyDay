@@ -56,6 +56,13 @@ section {
     box-shadow: 0 0 15px var(--glow-color), inset 0 0 5px var(--glow-color);
 }
 
+#preferences-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .form-group {
     margin-bottom: 1rem;
 }
@@ -68,7 +75,7 @@ label {
     color: var(--primary-color);
 }
 
-select, button {
+input[type="text"], select, button {
     font-family: 'Orbitron', sans-serif;
     padding: 0.75rem 1.25rem;
     border-radius: 4px;
@@ -120,4 +127,20 @@ button:hover {
     border-radius: 8px;
     border: 1px solid var(--primary-color);
     box-shadow: 0 0 10px var(--glow-color);
+}
+
+.timeline-details {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--primary-color);
+}
+
+.timeline-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.timeline-rating {
+    font-size: 1.2rem;
 }

@@ -101,16 +101,63 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-mode');
     });
 
+    function getInterestIcon(interest) {
+        switch (interest) {
+            case 'foodie': return 'fa-utensils';
+            case 'nature-lover': return 'fa-tree';
+            case 'history-buff': return 'fa-landmark';
+            case 'art-enthusiast': return 'fa-palette';
+            case 'tech-geek': return 'fa-laptop-code';
+            default: return 'fa-star';
+        }
+    }
+
+    function getActivityLevelIcon(activityLevel) {
+        switch (activityLevel) {
+            case 'low': return 'fa-person-walking';
+            case 'medium': return 'fa-person-biking';
+            case 'high': return 'fa-person-running';
+            default: return 'fa-star';
+        }
+    }
+
     // Mock itinerary generation
     function generateItinerary(preferences) {
         timeline.innerHTML = ''; // Clear previous itinerary
 
+        const name = preferences.name || "adventurer";
+
         const mockEvents = [
-            { time: '09:00', event: `Grab a coffee at a local cafe in ${preferences.location}.` },
-            { time: '10:00', event: `Visit the ${preferences.interests} spot.` },
-            { time: '12:00', event: 'Enjoy a delicious lunch.' },
-            { time: '14:00', event: `Explore the surroundings with a ${preferences.activityLevel} activity.` },
-            { time: '18:00', event: 'Dinner with friends.' },
+            {
+                time: '09:00',
+                event: `Good morning, ${name}! Start your day in ${preferences.location} with a visit to a renowned local coffee shop. Known for its aromatic, locally-roasted beans and cozy ambiance, it's the perfect spot to ease into your day. Enjoy a traditional kaya toast set for a truly Singaporean breakfast experience.`,
+                icon: 'fa-coffee',
+                rating: 4.7
+            },
+            {
+                time: '10:00',
+                event: `Time for your inner ${preferences.interests} to rejoice! Head to a nearby attraction that caters to your passion. Whether it's a state-of-the-art gallery for the art enthusiast, a sprawling park for the nature lover, or a historical landmark for the history buff, there's something for everyone.`,
+                icon: getInterestIcon(preferences.interests),
+                rating: 4.8
+            },
+            {
+                time: '12:00',
+                event: `Recharge with a delicious and ${preferences.budget} lunch. ${preferences.location} offers a wide range of culinary delights, from bustling hawker centers to charming cafes. No matter your budget, you'll find a satisfying meal to fuel the rest of your day.`,
+                icon: 'fa-utensils',
+                rating: 4.6
+            },
+            {
+                time: '14:00',
+                event: `Embark on a ${preferences.activityLevel} afternoon adventure. For a high-energy outing, consider a scenic bike ride or a challenging hike. If you prefer a more relaxed pace, a leisurely stroll through a botanical garden or a visit to a local market might be the perfect fit.`,
+                icon: getActivityLevelIcon(preferences.activityLevel),
+                rating: 4.9
+            },
+            {
+                time: '18:00',
+                event: `As evening approaches, it's time for a memorable dinner. Whether you're dining ${preferences.socialSetting} or with a group, ${preferences.location} has a plethora of options. From trendy restaurants to hidden gems, you're sure to find the perfect spot to end your day.`,
+                icon: 'fa-utensils',
+                rating: 4.7
+            },
         ];
 
         mockEvents.forEach(item => {
@@ -126,8 +173,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const event = document.createElement('p');
             event.textContent = item.event;
 
+            const details = document.createElement('div');
+            details.classList.add('timeline-details');
+
+            const icon = document.createElement('i');
+            icon.classList.add('fas', item.icon, 'timeline-icon');
+
+            const rating = document.createElement('span');
+            rating.classList.add('timeline-rating');
+            rating.innerHTML = `&starf; ${item.rating}`;
+
+            details.appendChild(icon);
+            details.appendChild(rating);
+
             timelineContent.appendChild(time);
             timelineContent.appendChild(event);
+            timelineContent.appendChild(details);
             timelineItem.appendChild(timelineContent);
             timeline.appendChild(timelineItem);
         });
