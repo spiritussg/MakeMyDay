@@ -1,4 +1,3 @@
-
 # Project Blueprint: Local Itinerary Planner
 
 ## Overview
@@ -7,29 +6,23 @@ This document outlines the design and development plan for a web application tha
 
 ## Core Features
 
-*   **User Preferences:** The application will ask users for their name, interests (e.g., foodie, nature lover), desired activity level, budget, social setting (solo or group), mock location (suburbs in Singapore), and time of day.
+*   **Interactive User Preferences:** The application will guide users through a step-by-step process to gather their preferences. Instead of a static form, users will be presented with one question at a time, selecting from interactive cards. The cards will disappear upon selection, creating a dynamic and engaging experience.
 *   **Location-Based:** The application will use the user's location to find events and activities within a 10km radius. (Initially, this will be mocked).
 *   **Calendar Integration:** The application will consider the user's calendar to plan around existing appointments, including travel time. (Initially, this will be mocked).
 *   **Itinerary Generation:** The application will generate a personalized and verbose itinerary for the day, including mock review ratings and activity icons.
 *   **Timeline Display:** The itinerary will be displayed in a clean, chronological timeline view.
-*   **Modern UI/UX:** The application will have a modern, visually appealing design with a focus on user experience.
+*   **Modern UI/UX:** The application will have a modern, visually appealing design with a focus on user experience, inspired by a provided reference. This includes a new color palette, typography, and layout using Tailwind CSS.
 *   **Reset functionality:** A reset button will be available to clear all selected preferences and the generated itinerary.
-*   **Disqus Integration:** A Disqus forum will be available at the bottom of the page for user comments and discussions.
 
-## Current Task: Add Animations and Sound
+## Current Task: Dynamic Preference-Gathering
 
-This task focuses on adding a headline graphic, hover sounds, and a loading animation to enhance the user experience.
+This task focuses on transforming the static preference form into a dynamic, step-by-step, card-based experience to enhance user engagement.
 
 ### Plan
 
-1.  **Add Assets (`assets/`):**
-    *   Create an `assets` directory to store a pixel art traveler GIF and a hover sound.
-2.  **Add Elements (`index.html`):**
-    *   Add an `<img>` tag for the headline graphic.
-    *   Add an `<audio>` tag for the hover sound.
-    *   Add a container for the loading animation.
-3.  **Add Styling (`style.css`):**
-    *   Add styling for the headline graphic and loading animation.
-4.  **Implement Logic (`main.js`):**
-    *   Implement hover sound effects on interactive elements.
-    *   Implement a loading animation with a time delay before displaying the itinerary.
+1.  **Refactor Form Generation (`main.js`):**
+    *   Implement a step-by-step workflow for preference selection.
+    *   Create a function to render one question at a time with a set of interactive cards.
+    *   When a card is selected, it will be visually removed, and the next question will be presented.
+2.  **Update Stylesheet (`style.css`):**
+    *   Add styles for the new card-based UI elements and selection animations.

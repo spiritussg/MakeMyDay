@@ -1,166 +1,24 @@
-/* General styles */
-body {
-    font-family: 'Orbitron', sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 0;
-    padding: 0;
-}
-
-/* Light mode */
-:root {
-    --background-color: #d4eaf7;
-    --text-color: #0d2c40;
-    --primary-color: #00aaff;
-    --secondary-color: #b8dcf0;
-    --glow-color: #00aaff;
-}
-
-/* Dark mode */
-body.dark-mode {
-    --background-color: #0d1a26;
-    --text-color: #e0f7ff;
-    --primary-color: #00ccff;
-    --secondary-color: #1a334d;
-    --glow-color: #00ccff;
-}
-
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--secondary-color);
-    border-bottom: 2px solid var(--primary-color);
-}
-
-#headline-graphic {
-    height: 50px;
-}
-
-#theme-toggle {
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-
-main {
-    padding: 2rem;
-}
-
-section {
-    margin-bottom: 2rem;
-    background-color: var(--secondary-color);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 15px var(--glow-color), inset 0 0 5px var(--glow-color);
-}
-
-#preferences-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-input[type="text"], select, button {
-    font-family: 'Orbitron', sans-serif;
-    padding: 0.75rem 1.25rem;
-    border-radius: 4px;
-    border: 1px solid var(--primary-color);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transition: box-shadow 0.3s, transform 0.3s;
-    box-shadow: 0 0 5px var(--glow-color);
-}
-
-button {
-    cursor: pointer;
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-}
-
-button:hover {
-    box-shadow: 0 0 20px var(--glow-color);
-    transform: translateY(-2px);
-}
-
-#loading-animation {
-    display: none;
-    margin: 2rem auto;
-    width: 100px;
-    height: 100px;
-    border: 5px solid var(--primary-color);
-    border-top: 5px solid var(--background-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.timeline-item {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-    border-left: 3px solid var(--primary-color);
+.paper-grain {
     position: relative;
 }
-
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -11px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    border: 3px solid var(--background-color);
-    box-shadow: 0 0 10px var(--glow-color);
+.paper-grain::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0.03;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-.timeline-content {
-    background-color: var(--background-color);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 10px var(--glow-color);
+.preference-card {
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-.timeline-details {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-    color: var(--primary-color);
-}
-
-.timeline-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
-
-.timeline-rating {
-    font-size: 1.2rem;
+.preference-card.selected {
+    transform: scale(0.95);
+    opacity: 0;
 }
