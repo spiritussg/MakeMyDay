@@ -1,1 +1,174 @@
-/* Add styles here */
+/* General Styles */
+:root {
+    --primary-color: #00ffc3;
+    --background-color-light: #f4f4f4;
+    --text-color-light: #333;
+    --background-color-dark: #1a1a1a;
+    --text-color-dark: #eee;
+    --card-background-light: #fff;
+    --card-background-dark: #2a2a2a;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2em;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    background-color: var(--card-background-light);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 255, 195, 0.3);
+    transition: background-color 0.3s;
+}
+
+body.dark-mode section {
+    background-color: var(--card-background-dark);
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+/* Preferences Form */
+#preferences-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+select, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--text-color-light);
+    font-family: 'Orbitron', sans-serif;
+    transition: box-shadow 0.3s;
+}
+
+body.dark-mode select,
+body.dark-mode button {
+    color: var(--text-color-dark);
+}
+
+select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Theme Toggle */
+#theme-toggle {
+    cursor: pointer;
+    position: relative;
+}
+
+#theme-icon-sun, #theme-icon-moon {
+    font-size: 1.5em;
+}
+
+#theme-icon-moon {
+    display: none;
+}
+
+body.dark-mode #theme-icon-sun {
+    display: none;
+}
+
+body.dark-mode #theme-icon-moon {
+    display: inline;
+}
+
+/* Timeline */
+#timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 40px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 5px;
+    width: 2px;
+    height: 100%;
+    background-color: var(--primary-color);
+    opacity: 0.3;
+}
+
+.timeline-content {
+    background-color: rgba(0, 255, 195, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.timeline-content h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
