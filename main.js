@@ -128,82 +128,149 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function generateActivity(selections, timeOfDay) {
+        const name = selections.name || "adventurer";
+        const activities = {
+            morning: [
+                {
+                    title: `Morning Coffee in ${selections.location}`,
+                    description: `Start your day with a visit to a renowned local coffee shop. Known for its aromatic, locally-roasted beans and cozy ambiance, it's the perfect spot to ease into your day.`,
+                    icon: 'coffee',
+                },
+                {
+                    title: `Sunrise Yoga at the Park`,
+                    description: `Join a refreshing morning yoga session at a serene park in ${selections.location}. A perfect start for a day of exploration.`,
+                    icon: 'self_improvement',
+                },
+                {
+                    title: "Local Hawker Breakfast",
+                    description: `Experience a traditional Singaporean breakfast at a bustling hawker center. Try local favorites like Kaya Toast, Soft-boiled Eggs, or Chwee Kueh.`,
+                    icon: "restaurant",
+                },
+                {
+                    title: "Morning Hike at MacRitchie Reservoir",
+                    description: "Embark on a scenic hike through the lush rainforest of MacRitchie Reservoir. Enjoy the fresh air and spot some local wildlife.",
+                    icon: "hiking",
+                },
+            ],
+            afternoon: [
+                {
+                    title: `Explore the Local Market`,
+                    description: `Immerse yourself in the local culture by visiting a bustling market in ${selections.location}. Discover unique crafts, fresh produce, and delicious street food.`,
+                    icon: 'storefront',
+                },
+                {
+                    title: `A ${selections.interests} Adventure`,
+                    description: `Indulge your inner ${selections.interests} with a visit to a nearby attraction. Whether it's a state-of-the-art gallery for the art enthusiast or a historical landmark for the history buff, there's something for everyone.`,
+                    icon: getInterestIcon(selections.interests),
+                },
+                {
+                    title: "Cycle Along East Coast Park",
+                    description: "Rent a bike and enjoy a leisurely cycle along the scenic coastline of East Coast Park. Stop for a refreshing coconut drink and enjoy the sea breeze.",
+                    icon: "directions_bike",
+                },
+                {
+                    title: "Indulge in a Peranakan Lunch",
+                    description: "Savor the unique flavors of Peranakan cuisine at a traditional restaurant. Enjoy dishes like Ayam Buah Keluak and Babi Pongteh.",
+                    icon: "restaurant_menu",
+                },
+            ],
+            evening: [
+                {
+                    title: `Dinner at a Hidden Gem`,
+                    description: `Discover a local secret and enjoy a delicious dinner at a hidden gem in ${selections.location}. Perfect for a ${selections.socialSetting} outing.`,
+                    icon: 'restaurant',
+                },
+                {
+                    title: `Live Music by the River`,
+                    description: `End your day with some live music at a riverside bar in ${selections.location}. Enjoy the cool breeze and the vibrant atmosphere.`,
+                    icon: 'music_note',
+                },
+                {
+                    title: "Gardens by the Bay Light Show",
+                    description: "Witness the spectacular Garden Rhapsody light and sound show at Gardens by the Bay. A mesmerizing experience to end your day.",
+                    icon: "local_florist",
+                },
+                {
+                    title: "Supper at a 24-Hour Eatery",
+                    description: "Experience Singapore's late-night food culture with a delicious supper at a 24-hour eatery. From prata to dim sum, the options are endless.",
+                    icon: "ramen_dining",
+                },
+            ]
+        };
+        const activityOptions = activities[timeOfDay];
+        return activityOptions[Math.floor(Math.random() * activityOptions.length)];
+    }
+
+    function createTimelineItem(activity, time, selections) {
+        const timelineItem = document.createElement('div');
+        timelineItem.classList.add('mb-8', 'flex', 'gap-6', 'items-start', 'timeline-item');
+        timelineItem.dataset.time = time;
+
+        const iconContainer = document.createElement('div');
+        iconContainer.classList.add('bg-primary-container', 'text-on-primary-container', 'rounded-full', 'p-4');
+        const icon = document.createElement('span');
+        icon.classList.add('material-symbols-outlined');
+        icon.textContent = activity.icon;
+        iconContainer.appendChild(icon);
+
+        const contentContainer = document.createElement('div');
+        contentContainer.classList.add('flex-1');
+
+        const title = document.createElement('h3');
+        title.classList.add('font-headline-lg', 'text-primary', 'mb-2');
+        title.textContent = activity.title;
+
+        const description = document.createElement('p');
+        description.classList.add('font-body-md', 'text-on-surface-variant', 'mb-4');
+        description.textContent = activity.description;
+
+        const footer = document.createElement('div');
+        footer.classList.add('flex', 'items-center', 'justify-between');
+
+        const rating = document.createElement('div');
+        rating.classList.add('flex', 'items-center', 'gap-2', 'font-label-md', 'text-secondary');
+        const star = document.createElement('span');
+        star.classList.add('material-symbols-outlined');
+        star.textContent = 'star';
+        rating.appendChild(star);
+        rating.append((Math.random() * (5 - 4) + 4).toFixed(1));
+
+        const swapButton = document.createElement('button');
+        swapButton.innerHTML = `<span class="material-symbols-outlined mr-2">swap_horiz</span> Swap`;
+        swapButton.classList.add('flex', 'items-center', 'bg-secondary-container', 'text-on-secondary-container', 'px-4', 'py-2', 'rounded-full', 'font-label-md', 'hover:shadow-lg', 'transition-all');
+        swapButton.addEventListener('click', () => {
+            const newActivity = generateActivity(selections, time.split(':')[0] < 12 ? 'morning' : time.split(':')[0] < 18 ? 'afternoon' : 'evening');
+            const newTimelineItem = createTimelineItem(newActivity, time, selections);
+            timelineItem.replaceWith(newTimelineItem);
+        });
+
+        footer.appendChild(rating);
+        footer.appendChild(swapButton);
+
+        contentContainer.appendChild(title);
+        contentContainer.appendChild(description);
+        contentContainer.appendChild(footer);
+
+        timelineItem.appendChild(iconContainer);
+        timelineItem.appendChild(contentContainer);
+
+        return timelineItem;
+    }
+
     function generateItinerary(selections) {
         loadingAnimation.classList.remove('hidden');
         timeline.innerHTML = '';
 
         setTimeout(() => {
             loadingAnimation.classList.add('hidden');
-            const name = selections.name || "adventurer";
 
-            const mockEvents = [
-                {
-                    time: '09:00',
-                    event: `Good morning, ${name}! Start your day in ${selections.location} with a visit to a renowned local coffee shop. Known for its aromatic, locally-roasted beans and cozy ambiance, it's the perfect spot to ease into your day. Enjoy a traditional kaya toast set for a truly Singaporean breakfast experience.`,
-                    icon: 'coffee',
-                    rating: 4.7
-                },
-                {
-                    time: '10:00',
-                    event: `Time for your inner ${selections.interests} to rejoice! Head to a nearby attraction that caters to your passion. Whether it's a state-of-the-art gallery for the art enthusiast, a sprawling park for the nature lover, or a historical landmark for the history buff, there's something for everyone.`,
-                    icon: getInterestIcon(selections.interests),
-                    rating: 4.8
-                },
-                {
-                    time: '12:00',
-                    event: `Recharge with a delicious and ${selections.budget} lunch. ${selections.location} offers a wide range of culinary delights, from bustling hawker centers to charming cafes. No matter your budget, you'll find a satisfying meal to fuel the rest of your day.`,
-                    icon: 'restaurant',
-                    rating: 4.6
-                },
-                {
-                    time: '14:00',
-                    event: `Embark on a ${selections.activityLevel} afternoon adventure. For a high-energy outing, consider a scenic bike ride or a challenging hike. If you prefer a more relaxed pace, a leisurely stroll through a botanical garden or a visit to a local market might be the perfect fit.`,
-                    icon: getActivityLevelIcon(selections.activityLevel),
-                    rating: 4.9
-                },
-                {
-                    time: '18:00',
-                    event: `As evening approaches, it's time for a memorable dinner. Whether you're dining ${selections.socialSetting} or with a group, ${selections.location} has a plethora of options. From trendy restaurants to hidden gems, you're sure to find the perfect spot to end your day.`,
-                    icon: 'restaurant',
-                    rating: 4.7
-                },
-            ];
+            const times = ['09:00', '14:00', '19:00'];
 
-            mockEvents.forEach(item => {
-                const timelineItem = document.createElement('div');
-                timelineItem.classList.add('mb-8', 'flex', 'gap-6', 'items-start');
-
-                const iconContainer = document.createElement('div');
-                iconContainer.classList.add('bg-primary-container', 'text-on-primary-container', 'rounded-full', 'p-4');
-                const icon = document.createElement('span');
-                icon.classList.add('material-symbols-outlined');
-                icon.textContent = item.icon;
-                iconContainer.appendChild(icon);
-
-                const contentContainer = document.createElement('div');
-                contentContainer.classList.add('flex-1');
-
-                const time = document.createElement('h3');
-                time.classList.add('font-headline-lg', 'text-primary', 'mb-2');
-                time.textContent = item.time;
-
-                const event = document.createElement('p');
-                event.classList.add('font-body-md', 'text-on-surface-variant', 'mb-4');
-                event.textContent = item.event;
-
-                const rating = document.createElement('div');
-                rating.classList.add('flex', 'items-center', 'gap-2', 'font-label-md', 'text-secondary');
-                const star = document.createElement('span');
-                star.classList.add('material-symbols-outlined');
-                star.textContent = 'star';
-                rating.appendChild(star);
-                rating.append(item.rating);
-
-                contentContainer.appendChild(time);
-                contentContainer.appendChild(event);
-                contentContainer.appendChild(rating);
-                timelineItem.appendChild(iconContainer);
-                timelineItem.appendChild(contentContainer);
+            times.forEach(time => {
+                const timeOfDay = time.split(':')[0] < 12 ? 'morning' : time.split(':')[0] < 18 ? 'afternoon' : 'evening';
+                const activity = generateActivity(selections, timeOfDay);
+                const timelineItem = createTimelineItem(activity, time, selections);
                 timeline.appendChild(timelineItem);
             });
         }, 2000);
